@@ -25,8 +25,7 @@ class Album
 
   def update()
     sql = "UPDATE albums SET
-    (name, genre, artist_id)
-    =
+    (name, genre, artist_id) =
     ($1, $2, $3)
     WHERE id = $4"
     values = [@name, @genre, @artist_id, @id]
@@ -37,9 +36,7 @@ class Album
     sql = "SELECT * FROM artists WHERE id = $1"
     values = [@artist_id]
     results = SqlRunner.run(sql, values)
-    artist_data = results[0]
-    artist = Artist.new(artist_data)
-    return artist
+    return Artist.new(results[0])
   end
 
   def delete()
@@ -48,7 +45,7 @@ class Album
     results = SqlRunner.run(sql, values)
   end
 
-  def self.all
+  def self.all()
     sql = "SELECT * FROM albums"
     albums = SqlRunner.run(sql)
     return albums.map{|album| Album.new(album)}
@@ -63,8 +60,6 @@ class Album
     sql = "SELECT * FROM albums WHERE id = $1"
     values = [id]
     results = SqlRunner.run(sql, values)
-    album_hash = results[0]
-    album = Album.new(album_hash)
-    return album
+    return Album.new(results[0])
   end
 end
